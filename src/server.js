@@ -17,6 +17,12 @@ export default (locals, callback) => {
         preloads + `<link as="script" rel="preload" href="/${script}"/>`;
     });
 
+  let styles = '';
+  const css = assets.filter(value => value.match(/\.css$/)).forEach(style => {
+    styles =
+      styles + `<link rel="stylesheet" type="text/css" href="/${style}" />`;
+  });
+
   // Render the page
   render(routes[locals.path].render()).then(html => {
     callback(
@@ -24,7 +30,7 @@ export default (locals, callback) => {
       `<html>
         <head>
           <title>mithril-static</title>
-          <link rel="stylesheet" type="text/css" href="/client.css" />
+          ${styles}
           ${preloads}
         </head>
         <body>
