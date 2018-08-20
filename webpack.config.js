@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
@@ -33,6 +34,16 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {},
+          },
+          'css-loader',
+        ],
+      },
     ],
   },
   plugins: [
@@ -53,6 +64,10 @@ module.exports = {
         window: dom.window,
         document: dom.document,
       },
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
     }),
   ].filter(Boolean),
 };

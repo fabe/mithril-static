@@ -21,6 +21,7 @@ export default (locals, callback) => {
       `<html>
         <head>
           <title>mithril-static</title>
+          <link rel="stylesheet" type="text/css" href="/client.css" />
         </head>
         <body>
         <div id="root">
