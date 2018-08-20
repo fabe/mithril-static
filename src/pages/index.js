@@ -1,9 +1,8 @@
 import Link from '../components/Link';
 
-let count = 0;
-
 export default {
-  view: () => (
+  count: 0,
+  view: ({ state }) => (
     <main>
       <h1>mithril-static</h1>
 
@@ -11,7 +10,7 @@ export default {
         <Link to="/about">About</Link>
       </nav>
 
-      <button onclick={() => count++}>Pressed: {count}</button>
+      <button onclick={() => state.count++}>Pressed: {state.count}</button>
     </main>
   ),
 };
