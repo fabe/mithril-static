@@ -6,12 +6,15 @@ export default (locals, callback) => {
 
   // Build script tags needed for page
   let scripts = '';
+  let preloads = '';
   const assets = Object.keys(locals.webpackStats.compilation.assets);
   const js = assets
     .filter(value => value.match(/\.js$/))
     .filter(value => value.indexOf('server') === -1)
     .forEach(script => {
-      scripts = scripts + `<script src="${script}" async></script>`;
+      scripts = scripts + `<script src="/${script}" async></script>`;
+      preloads =
+        preloads + `<link as="script" rel="preload" href="/${script}"/>`;
     });
 
   // Render the page
@@ -22,6 +25,7 @@ export default (locals, callback) => {
         <head>
           <title>mithril-static</title>
           <link rel="stylesheet" type="text/css" href="/client.css" />
+          ${preloads}
         </head>
         <body>
         <div id="root">
